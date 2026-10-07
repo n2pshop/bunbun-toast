@@ -11,7 +11,7 @@ async function init(){
   sb.auth.onAuthStateChange((_e,s)=>s?showApp():showLogin());
 }
 function showLogin(){$("loginScreen").classList.remove("hidden");$("adminApp").classList.add("hidden")}
-function showApp(){$("loginScreen").classList.add("hidden");$("adminApp").classList.remove("hidden");loadAll();subscribeOrders()}
+function showApp(){$("loginScreen").classList.add("hidden");$("adminApp").classList.remove("hidden");loadAll()}
 $("loginBtn").onclick=async()=>{
   const username=$("loginUsername").value.trim(),password=$("loginPassword").value;
   $("loginMsg").textContent="";
