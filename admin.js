@@ -37,11 +37,31 @@ async function loadOrders(){
   orders=data||[];renderOrders();renderStats();
 }
 function renderStats(){
-  const today=new Date();const key=today.toLocaleDateString("en-CA",{timeZone:"Asia/Bangkok"});
-  const todayRows=orders.filter(o=>String(o.created_at).slice(0,10)===key);
-  $("todayOrders").textContent=todayRows.length;
-  $("todaySales").textContent=money(todayRows.filter(o=>o.status!=="cancelled").reduce((s,o)=>s+Number(o.total||0),0));
-  $("pendingOrders").textContent=orders.filter(o=>["new","preparing","ready","delivering"].includes(o.status)).length;
+  const todayKey = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Bangkok"
+  }).format(new Date());
+
+  const todayRows = orders.filter(o => {
+    if (!o.created_at) return false;
+
+    const orderDate = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Bangkok"
+    }).format(new Date(o.created_at));
+
+    return orderDate === todayKey;
+  });
+
+  $("todayOrders").textContent = todayRows.length;
+
+  const sales = todayRows
+    .filter(o => o.status !== "cancelled")
+    .reduce((sum, o) => sum + Number(o.total || 0), 0);
+
+  $("todaySales").textContent = money(sales);
+
+  $("pendingOrders").textContent = orders.filter(o =>
+    ["new","preparing","ready","delivering"].includes(o.status)
+  ).length;
 }
 function renderOrders(){
   const filter=$("orderFilter").value;const rows=filter==="all"?orders:orders.filter(o=>o.status===filter);
