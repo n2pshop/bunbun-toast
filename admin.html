@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BunBun Toast CONTROL</title>
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <img src="logo.png" alt="BunBun Toast">
+      <span class="eyebrow">STAFF ONLY</span>
+      <h1>BunBun Toast<br>CONTROL</h1>
+      <p>เข้าสู่ระบบสำหรับเจ้าของร้าน</p>
+      <input id="loginUsername" type="text" placeholder="ชื่อผู้ใช้">
+      <input id="loginPassword" type="password" placeholder="รหัสผ่าน">
+      <button id="loginBtn" class="primary full">เข้าสู่ระบบ</button>
+      <div id="loginMsg" class="error"></div>
+    </div>
+  </div>
+
+  <div id="adminApp" class="hidden">
+    <header class="admin-top">
+      <div class="brand compact"><img src="logo.png"><div><strong>BunBun Toast CONTROL</strong><span>จัดการร้าน</span></div></div>
+      <div class="admin-actions"><button id="refreshBtn" class="ghost">↻ รีเฟรช</button><button id="logoutBtn" class="ghost">ออกจากระบบ</button></div>
+    </header>
+
+    <main class="admin-main">
+      <div class="stats">
+        <div class="stat"><span>ออเดอร์วันนี้</span><strong id="todayOrders">0</strong></div>
+        <div class="stat"><span>ยอดขายวันนี้</span><strong id="todaySales">฿0</strong></div>
+        <div class="stat"><span>รอดำเนินการ</span><strong id="pendingOrders">0</strong></div>
+      </div>
+
+      <section class="admin-section">
+        <div class="admin-section-head"><div><span class="eyebrow">ORDERS</span><h2>ออเดอร์ล่าสุด</h2></div><select id="orderFilter"><option value="all">ทั้งหมด</option><option value="new">ออเดอร์ใหม่</option><option value="preparing">กำลังทำ</option><option value="ready">พร้อมรับ</option><option value="delivering">กำลังส่ง</option><option value="done">เสร็จแล้ว</option><option value="cancelled">ยกเลิก</option></select></div>
+        <div id="ordersList" class="orders-list"></div>
+      </section>
+
+      <section class="admin-section">
+        <div class="admin-section-head"><div><span class="eyebrow">PRODUCTS</span><h2>จัดการเมนู</h2></div><button id="addProductBtn" class="primary">+ เพิ่มเมนู</button></div>
+        <div id="adminProducts" class="admin-product-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="productModal" class="modal-wrap">
+    <div class="modal">
+      <button class="icon-btn modal-close" id="closeProduct">×</button>
+      <div class="modal-title"><span>🍞</span><h2 id="productModalTitle">เพิ่มเมนู</h2></div>
+      <input type="hidden" id="productId">
+      <label>ชื่อเมนู<input id="productName" placeholder="เช่น เนยนม"></label>
+      <label>ราคา<input id="productPrice" type="number" min="0" placeholder="35"></label>
+      <label>รายละเอียด<textarea id="productDescription" rows="3" placeholder="หอมเนย นมฉ่ำ ๆ"></textarea></label>
+      <label>ลิงก์รูปภาพ (ถ้ามี)<input id="productImage" placeholder="https://..."></label>
+      <label class="check-row"><input id="productAvailable" type="checkbox" checked> เปิดขายเมนูนี้</label>
+      <button id="saveProductBtn" class="primary full">บันทึกเมนู</button>
+      <div id="productMsg" class="error"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BunBun Toast 🐰🍞</title>
+  <meta name="description" content="BunBun Toast - ขนมปังปิ้ง อร่อยทุกคำ ใส่ทะลักทุกชิ้น">
+  <link rel="icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#">
+      <img src="logo.png" alt="BunBun Toast">
+      <div><strong>BunBun Toast</strong><span>อร่อยทุกคำ ใส่ทะลักทุกชิ้น</span></div>
+    </a>
+    <button class="cart-btn" id="openCart">🛒 ตะกร้า <b id="cartCount">0</b></button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">🐰 FRESH TOAST • MADE TO ORDER</span>
+        <h1>ขนมปังปิ้ง<br><em>หอม ๆ จาก BunBun</em></h1>
+        <p>กรอบนอกนุ่มใน ไส้แน่นทุกคำ เลือกเมนูแล้วสั่งได้เลย</p>
+        <a href="#menu" class="primary">🍞 ดูเมนู</a>
+      </div>
+      <img src="logo.png" class="hero-logo" alt="BunBun Toast">
+    </section>
+
+    <section id="menu" class="section">
+      <div class="section-head">
+        <div><span class="eyebrow">OUR MENU</span><h2>เมนูขนมปังปิ้ง</h2></div>
+        <span id="shopState" class="shop-state">กำลังโหลดเมนู...</span>
+      </div>
+      <div id="products" class="product-grid"></div>
+    </section>
+  </main>
+
+  <div id="overlay" class="overlay"></div>
+
+  <aside id="cart" class="drawer">
+    <div class="drawer-head">
+      <h2>🛒 ตะกร้าของฉัน</h2>
+      <button class="icon-btn" id="closeCart">×</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-foot">
+      <div class="total-row"><span>รวม</span><strong id="cartTotal">฿0</strong></div>
+      <button id="checkout" class="primary full">สั่งซื้อ</button>
+    </div>
+  </aside>
+
+  <div id="orderModal" class="modal-wrap">
+    <div class="modal">
+      <button class="icon-btn modal-close" id="closeOrder">×</button>
+      <div class="modal-title"><span>🐰</span><h2>ยืนยันออเดอร์</h2></div>
+      <div id="orderSummary"></div>
+      <div class="form-grid">
+        <label>ชื่อผู้สั่ง<input id="customerName" placeholder="เช่น น้องบีม"></label>
+        <label>เบอร์โทร<input id="customerPhone" placeholder="08xxxxxxxx"></label>
+        <label class="full-field">วิธีรับสินค้า
+          <select id="fulfillment">
+            <option value="pickup">🏪 รับที่ร้าน</option>
+            <option value="delivery">🛵 จัดส่ง</option>
+          </select>
+        </label>
+        <label id="addressField" class="full-field hidden">ที่อยู่จัดส่ง<textarea id="customerAddress" rows="3" placeholder="บ้านเลขที่ / ซอย / จุดสังเกต"></textarea></label>
+        <label class="full-field">หมายเหตุ<textarea id="customerNote" rows="2" placeholder="หวานน้อย / ไม่ใส่..."></textarea></label>
+      </div>
+      <button id="confirmOrder" class="primary full">🐰 ยืนยันออเดอร์</button>
+      <div id="orderResult" class="result"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <footer>© 2026 BunBun Toast • อร่อยทุกคำ ใส่ทะลักทุกชิ้น 🐰</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
