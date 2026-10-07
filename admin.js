@@ -49,7 +49,7 @@ function renderOrders(){
   $("ordersList").innerHTML=rows.map(o=>`
   <article class="order-card">
     <div class="order-top"><div><div class="order-no">#${esc(o.order_no)}</div><div class="order-info">${esc(o.customer_name)} • ${esc(o.customer_phone)}<br>${o.fulfillment==="delivery"?"🛵 จัดส่ง: "+esc(o.address||"-"):"🏪 รับที่ร้าน"}${o.note?`<br>📝 ${esc(o.note)}`:""}</div></div><span class="badge">${statusNames[o.status]||o.status}</span></div>
-    <div class="order-items">${(o.items||[]).map(i=>`<div class="order-item-line"><span>${esc(i.name)} × ${i.qty}</span><b>${money(i.price*i.qty)}</b></div>`).join("")}</div>
+    <div class="order-items">${(Array.isArray(o.items)?o.items:[]).map(i=>`<div class="order-item-line"><span>${esc(i.name)} × ${i.qty}</span><b>${money(i.price*i.qty)}</b></div>`).join("")}</div>
     <div class="order-bottom"><span class="order-total">${money(o.total)}</span>
       <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
         ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
@@ -59,12 +59,18 @@ function renderOrders(){
 }
 $("orderFilter").onchange=renderOrders;
 async function updateStatus(id,status){
-  const {error}=await sb.from("orders").update({status}).eq("id",id);
+const {error}=await sb.from("bunbun_orders").update({status}).eq("id",id);
   if(error){toast("เปลี่ยนสถานะไม่สำเร็จ");return}
   const o=orders.find(x=>x.id===id);if(o)o.status=status;renderOrders();renderStats();toast("อัปเดตสถานะแล้ว");
 }
 function subscribeOrders(){
-  sb.channel("bunbun-orders").on("postgres_changes",{event:"*",schema:"public",table:"orders"},()=>loadOrders()).subscribe();
+  sb.channel("bunbun-orders")
+    .on(
+      "postgres_changes",
+      {event:"*",schema:"public",table:"bunbun_orders"},
+      ()=>loadOrders()
+    )
+    .subscribe();
 }
 
 async function loadProducts(){
