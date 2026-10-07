@@ -64,6 +64,18 @@ $("confirmOrder").onclick=async()=>{
   const {data,error}=await sb.from("bunbun_orders").insert({customer_name:name,customer_phone:phone,fulfillment,address:fulfillment==="delivery"?address:"",note,total,items:orderItems,status:"new"}).select("order_no").single();
   btn.disabled=false;btn.textContent="🐰 ยืนยันออเดอร์";
   if(error){$("orderResult").textContent="ส่งออเดอร์ไม่สำเร็จ กรุณาตรวจสอบ Supabase";console.error(error);return}
-  cart=[];saveCart();$("orderResult").innerHTML=`🎉 สั่งซื้อสำเร็จ!<br>เลขออเดอร์ <strong>${esc(data.order_no)}</strong><br><small>ร้านได้รับออเดอร์แล้ว</small>`;toast("รับออเดอร์แล้ว 🐰");
+  cart=[];saveCart();$("orderResult").innerHTML=`
+  <div class="success-bunny">🐰</div>
+  <h3>ขอบคุณสำหรับออเดอร์นะคะ! 💕</h3>
+  <p>รับออเดอร์เรียบร้อยแล้ว</p>
+  <div class="order-number">
+    🎫 เลขออเดอร์<br>
+    <strong>${esc(data.order_no)}</strong>
+  </div>
+  <p class="save-order">
+    ⚠️ กรุณาเก็บเลขออเดอร์นี้ไว้<br>
+    ใช้สำหรับสอบถามหรือรับสินค้าในภายหลังนะคะ
+  </p>
+`;
 };
 renderCart();loadProducts();
