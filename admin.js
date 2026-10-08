@@ -70,11 +70,19 @@ function renderOrders(){
   <article class="order-card">
     <div class="order-top"><div><div class="order-no">#${esc(o.order_no)}</div><div class="order-info">${esc(o.customer_name)} • ${esc(o.customer_phone)}<br>${o.fulfillment==="delivery"?"🛵 จัดส่ง: "+esc(o.address||"-"):"🏪 รับที่ร้าน"}${o.note?`<br>📝 ${esc(o.note)}`:""}</div></div><span class="badge">${statusNames[o.status]||o.status}</span></div>
     <div class="order-items">${(Array.isArray(o.items)?o.items:[]).map(i=>`<div class="order-item-line"><span>${esc(i.name)} × ${i.qty}</span><b>${money(i.price*i.qty)}</b></div>`).join("")}</div>
-    <div class="order-bottom"><span class="order-total">${money(o.total)}</span>
-      <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
-        ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
-      </select>
-    </div>
+<div class="order-bottom">
+  <span class="order-total">${money(o.total)}</span>
+
+  <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
+    ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
+  </select>
+
+  <button
+    class="delete-order-btn"
+    onclick="deleteOrder('${o.id}')">
+    🗑️ ลบ
+  </button>
+</div>
   </article>`).join("");
 }
 $("orderFilter").onchange=renderOrders;
