@@ -151,7 +151,7 @@ $("confirmOrder").onclick=async()=>{
 }
   const orderItems=rows.map(x=>({product_id:x.product.id,name:x.product.name,price:x.product.price,qty:x.qty}));
   const btn=$("confirmOrder");btn.disabled=true;btn.textContent="กำลังส่งออเดอร์...";
-  const {data,error}=await sb.from("bunbun_orders").insert({customer_name:name,customer_phone:phone,fulfillment,address:fulfillment==="delivery"?address:"",note,total,items:orderItems,status:"new"}).select("order_no").single();
+  const {data,error}=await sb.from("bunbun_orders").insert({customer_name:name,customer_phone:phone,fulfillment,address:fulfillment==="delivery"?address:"",note,total,items:orderItems,order_source: "online",status:"new"}).select("order_no").single();
   btn.disabled=false;btn.textContent="🐰 ยืนยันออเดอร์";
   if(error){$("orderResult").textContent="ส่งออเดอร์ไม่สำเร็จ กรุณาตรวจสอบ Supabase";console.error(error);return}
   cart=[];saveCart();$("orderResult").innerHTML=`
