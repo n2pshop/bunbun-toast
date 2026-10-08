@@ -110,5 +110,65 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="script.js?v=2"></script>
+  <script>
+/* =============================
+   ตรวจสอบเว็บเวอร์ชันอัตโนมัติ
+============================= */
+
+const SITE_VERSION_URL =
+  "https://n2pshop.github.io/bunbun-toast/index.html";
+
+let currentVersion = null;
+
+async function checkSiteUpdate(){
+
+  try{
+
+    const response = await fetch(
+      SITE_VERSION_URL + "?check=" + Date.now(),
+      { cache: "no-store" }
+    );
+
+    if(!response.ok) return;
+
+    const html = await response.text();
+
+    const version = html.length + html.slice(-500);
+
+    if(currentVersion === null){
+
+      currentVersion = version;
+      return;
+
+    }
+
+    if(version !== currentVersion){
+
+      // ถ้ากำลังกรอกออเดอร์อยู่ ยังไม่รี
+      const orderModal = document.getElementById("orderModal");
+
+      if(orderModal && orderModal.classList.contains("show")){
+        return;
+      }
+
+      location.reload();
+
+    }
+
+  }catch(error){
+
+    console.log("ตรวจสอบเวอร์ชันไม่ได้");
+
+  }
+
+}
+
+// เช็กครั้งแรกหลังเปิดเว็บ 5 วินาที
+setTimeout(checkSiteUpdate,5000);
+
+// เช็กทุก 30 วินาที
+setInterval(checkSiteUpdate,30000);
+
+</script>
 </body>
 </html>
