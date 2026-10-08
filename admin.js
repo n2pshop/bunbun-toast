@@ -358,4 +358,72 @@ function updateWalkInTotal(){
 
   $("walkInTotal").textContent = money(total);
 }
+$("saveWalkInOrder").onclick = async () => {
+
+  const items = products
+    .filter(p => (walkInCart[String(p.id)] || 0) > 0)
+    .map(p => ({
+      product_id: p.id,
+      name: p.name,
+      price: Number(p.price || 0),
+      qty: walkInCart[String(p.id)]
+    }));
+
+  if(!items.length){
+    $("walkInOrderMsg").textContent = "กรุณาเลือกเมนูก่อนครับ";
+    return;
+  }
+
+  const total = items.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0
+  );
+
+  const customerName =
+    $("walkInCustomerName").value.trim() || "หน้าร้าน";
+
+  const btn = $("saveWalkInOrder");
+
+  btn.disabled = true;
+  btn.textContent = "กำลังบันทึก...";
+
+  const { data, error } = await sb
+    .from("bunbun_orders")
+    .insert({
+      customer_name: customerName,
+      customer_phone: "หน้าร้าน",
+      fulfillment: "pickup",
+      address: "",
+      note: "ออเดอร์หน้าร้าน",
+      items: items,
+      total: total,
+      status: "new"
+    })
+    .select("order_no")
+    .single();
+
+  btn.disabled = false;
+  btn.textContent = "🏪 บันทึกออเดอร์หน้าร้าน";
+
+  if(error){
+    console.error(error);
+    $("walkInOrderMsg").textContent =
+      "❌ บันทึกไม่สำเร็จ: " + error.message;
+    return;
+  }
+
+  $("walkInOrderMsg").textContent =
+    "✅ บันทึกสำเร็จ เลขออเดอร์ " + data.order_no;
+
+  walkInCart = {};
+  renderWalkInProducts();
+  updateWalkInTotal();
+
+  await loadOrders();
+
+  setTimeout(() => {
+    $("walkInOrderModal").classList.remove("show");
+    $("walkInOrderMsg").textContent = "";
+  }, 1000);
+};
 renderWalkInProducts();
