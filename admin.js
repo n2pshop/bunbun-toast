@@ -83,6 +83,25 @@ const {error}=await sb.from("bunbun_orders").update({status}).eq("id",id);
   if(error){toast("เปลี่ยนสถานะไม่สำเร็จ");return}
   const o=orders.find(x=>x.id===id);if(o)o.status=status;renderOrders();renderStats();toast("อัปเดตสถานะแล้ว");
 }
+async function deleteOrder(id){
+  if(!confirm("ต้องการลบออเดอร์นี้ใช่ไหม?")) return;
+
+  const {error}=await sb
+    .from("bunbun_orders")
+    .delete()
+    .eq("id",id);
+
+  if(error){
+    toast("ลบออเดอร์ไม่สำเร็จ");
+    console.error(error);
+    return;
+  }
+
+  orders=orders.filter(o=>o.id!==id);
+  renderOrders();
+  renderStats();
+  toast("ลบออเดอร์แล้ว 🗑️");
+}
 function subscribeOrders(){
   sb.channel("bunbun-orders")
     .on(
