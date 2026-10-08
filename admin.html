@@ -33,7 +33,40 @@
         <div class="stat"><span>ยอดขายวันนี้</span><strong id="todaySales">฿0</strong></div>
         <div class="stat"><span>รอดำเนินการ</span><strong id="pendingOrders">0</strong></div>
       </div>
+</div>
 
+<!-- เวลาเปิด-ปิดร้าน -->
+<section class="admin-section">
+  <div class="admin-section-head">
+    <div>
+      <span class="eyebrow">SHOP HOURS</span>
+      <h2>🕐 เวลาเปิด–ปิดร้าน</h2>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:15px;align-items:end;flex-wrap:wrap">
+    <label>
+      เวลาเปิด
+      <input type="time" id="shopOpenTime" value="09:00">
+    </label>
+
+    <label>
+      เวลาปิด
+      <input type="time" id="shopCloseTime" value="20:00">
+    </label>
+
+    <button
+      type="button"
+      id="saveShopHours"
+      class="primary">
+      💾 บันทึกเวลา
+    </button>
+  </div>
+
+  <div id="shopHoursResult" style="margin-top:12px"></div>
+</section>
+
+<section class="admin-section">
 <section class="admin-section">
   <div class="admin-section-head">
 
