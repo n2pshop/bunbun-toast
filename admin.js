@@ -286,3 +286,14 @@ const todaySalesDate = new Intl.DateTimeFormat("en-CA", {
 $("salesDate").value = todaySalesDate;
 
 loadSalesSummary(todaySalesDate);
+// =============================
+// เปิดออเดอร์หน้าร้าน
+// =============================
+
+$("addWalkInOrderBtn").onclick = () => {
+  $("walkInOrderModal").classList.add("show");
+};
+
+$("closeWalkInOrder").onclick = () => {
+  $("walkInOrderModal").classList.remove("show");
+};
