@@ -1596,3 +1596,117 @@ footer{
   color:#4d3029;
   font-weight:700;
 }
+/* =========================
+   หน้าต่างสั่งซื้อสำเร็จ
+========================= */
+
+.success-popup-content{
+  text-align:center;
+  padding:10px 5px 5px;
+}
+
+.success-bunny{
+  font-size:64px;
+  line-height:1;
+  margin-bottom:12px;
+  animation:bunnyPop .5s ease;
+}
+
+.success-popup-content h3{
+  margin:0 0 8px;
+  color:#7b4a43;
+  font-size:24px;
+}
+
+.success-text{
+  margin:0 0 20px;
+  color:#947568;
+  font-size:15px;
+}
+
+.order-number-box{
+  background:linear-gradient(135deg,#fff5fa,#fff9f0);
+  border:2px solid #e7bfd7;
+  border-radius:20px;
+  padding:18px 15px;
+  margin:15px 0;
+  box-shadow:0 8px 20px rgba(180,110,150,.12);
+}
+
+.order-label{
+  color:#947568;
+  font-size:14px;
+  margin-bottom:8px;
+}
+
+.order-number-box strong{
+  display:block;
+  color:#9a5a91;
+  font-size:24px;
+  letter-spacing:1px;
+  margin-bottom:15px;
+}
+
+.copy-order-btn{
+  border:none;
+  background:linear-gradient(135deg,#c989c9,#9b68a8);
+  color:#fff;
+  padding:11px 18px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 5px 12px rgba(155,104,168,.25);
+  transition:.2s;
+}
+
+.copy-order-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 7px 16px rgba(155,104,168,.32);
+}
+
+.copy-order-btn.copied{
+  background:#7bb88a;
+}
+
+.save-order{
+  background:#fff8e8;
+  color:#8a6a43;
+  border-radius:14px;
+  padding:12px;
+  margin:15px 0;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.success-close-btn{
+  width:100%;
+  border:none;
+  background:linear-gradient(135deg,#b97978,#925c62);
+  color:#fff;
+  padding:13px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.success-close-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 15px rgba(146,92,98,.25);
+}
+
+@keyframes bunnyPop{
+  0%{
+    transform:scale(.5);
+    opacity:0;
+  }
+  70%{
+    transform:scale(1.15);
+  }
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+}
