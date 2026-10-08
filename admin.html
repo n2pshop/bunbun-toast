@@ -116,27 +116,32 @@
 </section>
 
 <section class="admin-section">
-<div class="admin-section-head">
-  <div>
-    <span class="eyebrow">ORDERS</span>
-    <h2>ออเดอร์</h2>
-  </div>
 
-  <button
-    type="button"
-    id="addWalkInOrderBtn"
-    class="primary">
-    + ออเดอร์หน้าร้าน
-  </button>
+  <div class="admin-section-head">
+
+    <div>
+      <span class="eyebrow">ORDERS</span>
+      <h2>ออเดอร์</h2>
+    </div>
 
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
 
+      <!-- ออเดอร์หน้าร้าน -->
+      <button
+        type="button"
+        id="addWalkInOrderBtn"
+        class="primary">
+        🏪 + ออเดอร์หน้าร้าน
+      </button>
+
+      <!-- เลือกวันที่ -->
       <input
         type="date"
         id="orderDate"
         style="padding:10px 12px;border:1px solid #ead8d2;border-radius:10px;background:#fff;color:#5b4038"
       >
 
+      <!-- สถานะ -->
       <select id="orderFilter">
         <option value="all">ทุกสถานะ</option>
         <option value="new">ออเดอร์ใหม่</option>
@@ -147,15 +152,16 @@
         <option value="cancelled">ยกเลิก</option>
       </select>
 
+      <!-- ดูทั้งหมด -->
       <button
         type="button"
         onclick="clearOrderDate()"
-        style="padding:10px 12px;border:0;border-radius:10px;background:#f3e5df;color:#6b4035;cursor:pointer"
-      >
+        style="padding:10px 12px;border:0;border-radius:10px;background:#f3e5df;color:#6b4035;cursor:pointer">
         ดูทั้งหมด
       </button>
 
     </div>
+
   </div>
 
   <div id="ordersList" class="orders-list"></div>
