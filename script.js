@@ -13,10 +13,18 @@ async function loadShopStatus(){
     .eq("id",1)
     .single();
 
-  if(error){
-    console.error("โหลดเวลาร้านไม่ได้:", error);
-    return;
-  }
+if(error){
+  console.error("ORDER ERROR:", error);
+
+  $("orderResult").innerHTML = `
+    <div style="color:#b44;padding:15px;">
+      ❌ ส่งออเดอร์ไม่สำเร็จ<br>
+      <small>${esc(error.message || "ไม่ทราบสาเหตุ")}</small>
+    </div>
+  `;
+
+  return;
+}
 
   shopOpenTime = data.open_time.slice(0,5);
   shopCloseTime = data.close_time.slice(0,5);
