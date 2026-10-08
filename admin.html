@@ -36,34 +36,43 @@
 </div>
 
 <!-- เวลาเปิด-ปิดร้าน -->
-<section class="admin-section">
-  <div class="admin-section-head">
+<section class="shop-hours-card">
+
+  <div class="shop-hours-title">
+    <div class="shop-hours-icon">🕐</div>
+
     <div>
       <span class="eyebrow">SHOP HOURS</span>
-      <h2>🕐 เวลาเปิด–ปิดร้าน</h2>
+      <h2>เวลาเปิด–ปิดร้าน</h2>
+      <p>กำหนดช่วงเวลาที่ลูกค้าสามารถสั่งออเดอร์ได้</p>
     </div>
   </div>
 
-  <div style="display:flex;gap:15px;align-items:end;flex-wrap:wrap">
-    <label>
-      เวลาเปิด
-      <input type="time" id="shopOpenTime" value="09:00">
-    </label>
+  <div class="shop-hours-form">
 
-    <label>
-      เวลาปิด
+    <div class="time-box">
+      <span>🌅 เปิดร้าน</span>
+      <input type="time" id="shopOpenTime" value="09:00">
+    </div>
+
+    <div class="time-arrow">→</div>
+
+    <div class="time-box">
+      <span>🌙 ปิดร้าน</span>
       <input type="time" id="shopCloseTime" value="20:00">
-    </label>
+    </div>
 
     <button
       type="button"
       id="saveShopHours"
-      class="primary">
+      class="save-hours-btn">
       💾 บันทึกเวลา
     </button>
+
   </div>
 
-  <div id="shopHoursResult" style="margin-top:12px"></div>
+  <div id="shopHoursResult" class="shop-hours-result"></div>
+
 </section>
 
 <section class="admin-section">
