@@ -89,7 +89,7 @@ function renderOrders(){
   if(!rows.length){$("ordersList").innerHTML=`<div class="order-card" style="text-align:center;color:#947568;padding:35px">ยังไม่มีออเดอร์</div>`;return}
   $("ordersList").innerHTML=rows.map(o=>`
   <article class="order-card">
-    <div class="order-top"><div><div class="order-no">#${esc(o.order_no)}</div><div class="order-info">${esc(o.customer_name)} • ${esc(o.customer_phone)}<br>${o.fulfillment==="delivery"?"🛵 จัดส่ง: "+esc(o.address||"-"):"🏪 รับที่ร้าน"}${o.note?`<br>📝 ${esc(o.note)}`:""}</div></div><span class="badge">${statusNames[o.status]||o.status}</span></div>
+    <div class="order-top"><div><div class="order-no">#${esc(o.order_no)}</div><div class="order-no">#${esc(o.order_no)} <span style="margin-left:8px;font-size:12px;padding:4px 8px;border-radius:8px;background:${o.order_source==="walkin"?"#fff0e6":"#f0e8ff"};color:${o.order_source==="walkin"?"#b85c00":"#7a3db8"}">${o.order_source==="walkin"?"🏪 หน้าร้าน":"🛒 ออนไลน์"}</span></div>${o.fulfillment==="delivery"?"🛵 จัดส่ง: "+esc(o.address||"-"):"🏪 รับที่ร้าน"}${o.note?`<br>📝 ${esc(o.note)}`:""}</div></div><span class="badge">${statusNames[o.status]||o.status}</span></div>
     <div class="order-items">${(Array.isArray(o.items)?o.items:[]).map(i=>`<div class="order-item-line"><span>${esc(i.name)} × ${i.qty}</span><b>${money(i.price*i.qty)}</b></div>`).join("")}</div>
 <div class="order-bottom">
   <span class="order-total">${money(o.total)}</span>
