@@ -1496,3 +1496,46 @@ footer{
 .line-contact-btn:active{
   transform:translateY(0);
 }
+/* =========================
+   ปุ่มแยกช่องทางออเดอร์
+========================= */
+
+.source-btn{
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: #fff;
+  color: #6b4035;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(120,80,60,.08);
+  transition: all .2s ease;
+}
+
+.source-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(120,80,60,.14);
+}
+
+/* ปุ่มที่เลือกอยู่ */
+.source-btn.active{
+  background: linear-gradient(135deg,#c989c9,#8f5a9f);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(143,90,159,.28);
+}
+
+/* ออนไลน์ */
+#sourceOnline{
+  border: 1px solid #ead8f2;
+}
+
+/* หน้าร้าน */
+#sourceWalkin{
+  border: 1px solid #f1ddd2;
+}
+
+/* ทั้งหมด */
+#sourceAll{
+  border: 1px solid #ead8d2;
+}
