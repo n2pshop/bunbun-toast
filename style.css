@@ -178,49 +178,71 @@
    BUNBUN ORDER STATUS
 ========================= */
 
+/* =========================
+   BUNBUN ORDER STATUS
+========================= */
+
 .status-check{
-  padding:55px 20px;
+  width:100%;
+  box-sizing:border-box;
+  padding:70px 20px 80px;
   background:#fffaf7;
 }
 
 .status-box{
-  max-width:650px;
+  width:100%;
+  max-width:720px;
+  box-sizing:border-box;
   margin:0 auto;
-  padding:32px;
-  background:#fff;
-  border:1px solid #f1ddd5;
+  padding:38px 36px;
+  background:#ffffff;
+  border:1px solid #f0d8ce;
   border-radius:28px;
-  box-shadow:0 15px 40px rgba(110,70,55,.10);
+  box-shadow:0 12px 35px rgba(105,70,55,.10);
   text-align:center;
 }
 
+.status-box .eyebrow{
+  display:block;
+  margin-bottom:10px;
+  color:#b45d67;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:1.5px;
+}
+
 .status-box h2{
-  margin:8px 0 6px;
-  color:#63382d;
-  font-size:28px;
+  margin:0 0 8px;
+  color:#5f342a;
+  font-size:30px;
+  line-height:1.3;
 }
 
 .status-box > p{
-  margin:0 0 24px;
-  color:#9a786c;
+  margin:0 0 28px;
+  color:#96776c;
+  font-size:16px;
 }
 
 .status-form{
+  width:100%;
+  max-width:560px;
+  margin:0 auto;
   display:flex;
   gap:10px;
-  max-width:520px;
-  margin:0 auto;
+  align-items:stretch;
 }
 
 .status-form input{
   flex:1;
   min-width:0;
-  padding:14px 16px;
-  border:1px solid #ead8d2;
-  border-radius:14px;
+  box-sizing:border-box;
+  padding:15px 16px;
+  border:1px solid #e6cec5;
+  border-radius:15px;
   background:#fffaf8;
   color:#5b4038;
-  font-size:15px;
+  font-size:16px;
   outline:none;
 }
 
@@ -231,10 +253,11 @@
 
 .status-form button{
   border:0;
-  border-radius:14px;
-  padding:14px 18px;
+  border-radius:15px;
+  padding:0 22px;
   background:#7b3824;
   color:#fff;
+  font-size:16px;
   font-weight:700;
   cursor:pointer;
   white-space:nowrap;
@@ -246,15 +269,17 @@
 
 /* ผลลัพธ์ */
 .status-result{
+  width:100%;
+  box-sizing:border-box;
   margin-top:25px;
-  padding:24px;
+  padding:25px;
   background:#fff8f3;
   border:1px solid #f0d8ce;
   border-radius:20px;
 }
 
 .status-order-no{
-  font-size:18px;
+  font-size:19px;
   font-weight:800;
   color:#6b382b;
   margin-bottom:10px;
@@ -275,37 +300,51 @@
   font-weight:800;
 }
 
-.status-error{
+.status-error,
+.status-loading{
+  width:100%;
+  box-sizing:border-box;
   margin-top:20px;
   padding:14px;
   border-radius:14px;
+}
+
+.status-error{
   background:#fff0f0;
   color:#a34b4b;
 }
 
 .status-loading{
-  margin-top:20px;
-  padding:14px;
-  border-radius:14px;
   background:#fff8ef;
   color:#94654f;
 }
 
 /* มือถือ */
 @media(max-width:600px){
+
+  .status-check{
+    padding:45px 14px 60px;
+  }
+
   .status-box{
-    padding:24px 18px;
+    padding:28px 18px;
+    border-radius:22px;
   }
 
   .status-box h2{
-    font-size:23px;
+    font-size:24px;
   }
 
   .status-form{
     flex-direction:column;
   }
 
+  .status-form input{
+    width:100%;
+  }
+
   .status-form button{
     width:100%;
+    min-height:48px;
   }
 }
