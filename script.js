@@ -7,7 +7,7 @@ function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("sho
 function saveCart(){localStorage.setItem("bunbun_cart",JSON.stringify(cart)); renderCart();}
 
 async function loadProducts(){
-  const {data,error}=await sb.from("products").select("*").eq("available",true).order("sort_order",{ascending:true}).order("created_at",{ascending:true});
+  const {data,error}=await sb.from("products").select("*").eq("available",true).order("created_at",{ascending:true});order("created_at",{ascending:true});
   if(error){ $("shopState").textContent="กรุณาตั้งค่า Supabase ก่อน"; renderDemoProducts(); return; }
   products=data||[]; $("shopState").textContent=products.length ? "พร้อมรับออเดอร์ 🐰" : "ยังไม่มีเมนู";
   renderProducts();
