@@ -115,7 +115,10 @@ function openOrder(){
   $("orderSummary").innerHTML=rows.map(x=>`<div class="summary-line"><span>${esc(x.product.name)} × ${x.qty}</span><b>${money(x.product.price*x.qty)}</b></div>`).join("")+`<div class="summary-total"><span>รวม</span><span>${money(rows.reduce((s,x)=>s+x.product.price*x.qty,0))}</span></div>`;
   $("orderResult").textContent="";$("orderModal").classList.add("show");
 }
-function closeOrder(){$("orderModal").classList.remove("show")}
+function closeOrder(){
+  $("orderModal").classList.remove("show");
+  $("orderModal").classList.remove("success-mode");
+}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 $("openCart").onclick=openCart;
 $("closeCart").onclick=closeCart;
@@ -156,6 +159,8 @@ $("confirmOrder").onclick=async()=>{
   if(error){$("orderResult").textContent="ส่งออเดอร์ไม่สำเร็จ กรุณาตรวจสอบ Supabase";console.error(error);return}
 cart=[];
 saveCart();
+
+$("orderModal").classList.add("success-mode");
 
 $("orderResult").innerHTML = `
   <div class="success-popup-content">
