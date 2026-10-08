@@ -174,3 +174,138 @@
     max-width:100%;
   }
 }
+/* =========================
+   BUNBUN ORDER STATUS
+========================= */
+
+.status-check{
+  padding:55px 20px;
+  background:#fffaf7;
+}
+
+.status-box{
+  max-width:650px;
+  margin:0 auto;
+  padding:32px;
+  background:#fff;
+  border:1px solid #f1ddd5;
+  border-radius:28px;
+  box-shadow:0 15px 40px rgba(110,70,55,.10);
+  text-align:center;
+}
+
+.status-box h2{
+  margin:8px 0 6px;
+  color:#63382d;
+  font-size:28px;
+}
+
+.status-box > p{
+  margin:0 0 24px;
+  color:#9a786c;
+}
+
+.status-form{
+  display:flex;
+  gap:10px;
+  max-width:520px;
+  margin:0 auto;
+}
+
+.status-form input{
+  flex:1;
+  min-width:0;
+  padding:14px 16px;
+  border:1px solid #ead8d2;
+  border-radius:14px;
+  background:#fffaf8;
+  color:#5b4038;
+  font-size:15px;
+  outline:none;
+}
+
+.status-form input:focus{
+  border-color:#c77b61;
+  box-shadow:0 0 0 3px rgba(199,123,97,.12);
+}
+
+.status-form button{
+  border:0;
+  border-radius:14px;
+  padding:14px 18px;
+  background:#7b3824;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.status-form button:hover{
+  background:#642d1e;
+}
+
+/* ผลลัพธ์ */
+.status-result{
+  margin-top:25px;
+  padding:24px;
+  background:#fff8f3;
+  border:1px solid #f0d8ce;
+  border-radius:20px;
+}
+
+.status-order-no{
+  font-size:18px;
+  font-weight:800;
+  color:#6b382b;
+  margin-bottom:10px;
+}
+
+.status-customer{
+  color:#87665b;
+  margin-bottom:16px;
+}
+
+.status-current{
+  display:inline-block;
+  padding:12px 22px;
+  border-radius:999px;
+  background:#fff0e8;
+  color:#8a432d;
+  font-size:17px;
+  font-weight:800;
+}
+
+.status-error{
+  margin-top:20px;
+  padding:14px;
+  border-radius:14px;
+  background:#fff0f0;
+  color:#a34b4b;
+}
+
+.status-loading{
+  margin-top:20px;
+  padding:14px;
+  border-radius:14px;
+  background:#fff8ef;
+  color:#94654f;
+}
+
+/* มือถือ */
+@media(max-width:600px){
+  .status-box{
+    padding:24px 18px;
+  }
+
+  .status-box h2{
+    font-size:23px;
+  }
+
+  .status-form{
+    flex-direction:column;
+  }
+
+  .status-form button{
+    width:100%;
+  }
+}
