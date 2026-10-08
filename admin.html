@@ -33,7 +33,47 @@
         <div class="stat"><span>ยอดขายวันนี้</span><strong id="todaySales">฿0</strong></div>
         <div class="stat"><span>รอดำเนินการ</span><strong id="pendingOrders">0</strong></div>
       </div>
-</div>
+      <!-- สรุปยอดขายตามวันที่ -->
+<section class="sales-summary">
+
+  <div class="sales-summary-head">
+    <div>
+      <span class="eyebrow">SALES SUMMARY</span>
+      <h2>📊 สรุปยอดขาย</h2>
+      <p>เลือกวันที่เพื่อดูยอดขายและจำนวนออเดอร์</p>
+    </div>
+  </div>
+
+  <div class="sales-date-box">
+    <label for="salesDate">เลือกวันที่</label>
+
+    <input
+      type="date"
+      id="salesDate"
+    >
+
+    <button
+      type="button"
+      id="salesTodayBtn">
+      วันนี้
+    </button>
+  </div>
+
+  <div class="sales-result">
+
+    <div class="sales-item">
+      <span>🧾 จำนวนออเดอร์</span>
+      <strong id="salesOrderCount">0</strong>
+    </div>
+
+    <div class="sales-item">
+      <span>💰 ยอดขาย</span>
+      <strong id="salesAmount">฿0</strong>
+    </div>
+
+  </div>
+
+</section>
 
 <!-- เวลาเปิด-ปิดร้าน -->
 <section class="shop-hours-card">
@@ -75,7 +115,6 @@
 
 </section>
 
-<section class="admin-section">
 <section class="admin-section">
   <div class="admin-section-head">
 
