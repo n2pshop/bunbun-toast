@@ -145,6 +145,10 @@ $("confirmOrder").onclick=async()=>{
   if(!name||!phone){toast("กรุณากรอกชื่อและเบอร์โทร");return}
   if(fulfillment==="delivery"&&!address){toast("กรุณากรอกที่อยู่จัดส่ง");return}
   const total=rows.reduce((s,x)=>s+x.product.price*x.qty,0);
+  if(fulfillment==="delivery" && total < 100){
+  toast("ยอดสั่งขั้นต่ำสำหรับจัดส่งคือ ฿100");
+  return;
+}
   const orderItems=rows.map(x=>({product_id:x.product.id,name:x.product.name,price:x.product.price,qty:x.qty}));
   const btn=$("confirmOrder");btn.disabled=true;btn.textContent="กำลังส่งออเดอร์...";
   const {data,error}=await sb.from("bunbun_orders").insert({customer_name:name,customer_phone:phone,fulfillment,address:fulfillment==="delivery"?address:"",note,total,items:orderItems,status:"new"}).select("order_no").single();
