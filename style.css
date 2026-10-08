@@ -1710,3 +1710,25 @@ footer{
     opacity:1;
   }
 }
+/* =========================
+   โหมดสั่งซื้อสำเร็จ
+========================= */
+
+/* ซ่อนส่วนฟอร์มเดิมเมื่อสั่งซื้อสำเร็จ */
+#orderModal.success-mode .modal-title,
+#orderModal.success-mode #orderSummary,
+#orderModal.success-mode .form-grid,
+#orderModal.success-mode #confirmOrder{
+  display:none;
+}
+
+/* ทำหน้าต่างให้กระชับและสวยขึ้น */
+#orderModal.success-mode .modal{
+  width:min(430px,100%);
+  padding:28px 22px;
+}
+
+/* ปุ่ม X ด้านบน */
+#orderModal.success-mode .modal-close{
+  z-index:5;
+}
