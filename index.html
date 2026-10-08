@@ -37,6 +37,29 @@
     </section>
   </main>
 
+<!-- เช็คสถานะออเดอร์ -->
+<section class="status-check">
+  <div class="status-box">
+    <span class="eyebrow">ORDER STATUS</span>
+    <h2>🐰 เช็คสถานะออเดอร์</h2>
+    <p>กรอกเลขออเดอร์เพื่อดูสถานะล่าสุด</p>
+
+    <div class="status-form">
+      <input
+        type="text"
+        id="checkOrderNo"
+        placeholder="เช่น BUN-20261008-XXXX"
+      >
+
+      <button type="button" id="checkOrderBtn">
+        🔎 เช็คสถานะ
+      </button>
+    </div>
+
+    <div id="orderStatusResult"></div>
+  </div>
+</section>
+
   <div id="overlay" class="overlay"></div>
 
   <aside id="cart" class="drawer">
