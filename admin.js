@@ -291,6 +291,7 @@ loadSalesSummary(todaySalesDate);
 // =============================
 
 $("addWalkInOrderBtn").onclick = () => {
+  console.log("กดปุ่มออเดอร์หน้าร้านแล้ว");
   $("walkInOrderModal").classList.add("show");
 };
 
