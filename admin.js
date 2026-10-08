@@ -71,45 +71,161 @@ function renderStats(){
   ).length;
 }
 function renderOrders(){
-  const filter=$("orderFilter").value;
-  const selectedDate=$("orderDate").value;
+  const filter = $("orderFilter").value;
+  const selectedDate = $("orderDate").value;
 
-  let rows=filter==="all"?orders:orders.filter(o=>o.status===filter);
+  let rows = filter === "all"
+    ? orders
+    : orders.filter(o => o.status === filter);
 
-if(orderSourceFilter !== "all"){
-  rows = rows.filter(o => o.order_source === orderSourceFilter);
-}
+  if(orderSourceFilter !== "all"){
+    rows = rows.filter(o => o.order_source === orderSourceFilter);
+  }
 
   if(selectedDate){
-    rows=rows.filter(o=>{
+    rows = rows.filter(o => {
       if(!o.created_at) return false;
 
-      const orderDate=new Intl.DateTimeFormat("en-CA",{
-        timeZone:"Asia/Bangkok"
+      const orderDate = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Bangkok"
       }).format(new Date(o.created_at));
 
-      return orderDate===selectedDate;
+      return orderDate === selectedDate;
     });
   }
-  if(!rows.length){$("ordersList").innerHTML=`<div class="order-card" style="text-align:center;color:#947568;padding:35px">ยังไม่มีออเดอร์</div>`;return}
-  $("ordersList").innerHTML=rows.map(o=>`
-  <article class="order-card">
-    <div class="order-top"><div><div class="order-no">#${esc(o.order_no)}</div><div class="order-no">#${esc(o.order_no)} <span style="margin-left:8px;font-size:12px;padding:4px 8px;border-radius:8px;background:${o.order_source==="walkin"?"#fff0e6":"#f0e8ff"};color:${o.order_source==="walkin"?"#b85c00":"#7a3db8"}">${o.order_source==="walkin"?"🏪 หน้าร้าน":"🛒 ออนไลน์"}</span></div>${o.fulfillment==="delivery"?"🛵 จัดส่ง: "+esc(o.address||"-"):"🏪 รับที่ร้าน"}${o.note?`<br>📝 ${esc(o.note)}`:""}</div></div><span class="badge">${statusNames[o.status]||o.status}</span></div>
-    <div class="order-items">${(Array.isArray(o.items)?o.items:[]).map(i=>`<div class="order-item-line"><span>${esc(i.name)} × ${i.qty}</span><b>${money(i.price*i.qty)}</b></div>`).join("")}</div>
-<div class="order-bottom">
-  <span class="order-total">${money(o.total)}</span>
 
-  <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
-    ${Object.entries(statusNames).map(([v,n])=>`<option value="${v}" ${o.status===v?"selected":""}>${n}</option>`).join("")}
-  </select>
+  if(!rows.length){
+    $("ordersList").innerHTML = `
+      <div class="order-card" style="text-align:center;color:#947568;padding:35px">
+        ยังไม่มีออเดอร์
+      </div>
+    `;
+    return;
+  }
 
-  <button
-    class="delete-order-btn"
-    onclick="deleteOrder('${o.id}')">
-    🗑️ ลบ
-  </button>
-</div>
-  </article>`).join("");
+  $("ordersList").innerHTML = rows.map(o => {
+
+    const sourceText =
+      o.order_source === "walkin"
+        ? "🏪 หน้าร้าน"
+        : "🛒 ออนไลน์";
+
+    const sourceClass =
+      o.order_source === "walkin"
+        ? "walkin"
+        : "online";
+
+    return `
+      <article class="order-card">
+
+        <div class="order-top">
+
+          <div>
+
+            <div class="order-no">
+              #${esc(o.order_no)}
+
+              <span class="order-source ${sourceClass}">
+                ${sourceText}
+              </span>
+            </div>
+
+            <div class="order-info">
+
+              <strong>
+                ${esc(o.customer_name || "ไม่ระบุชื่อ")}
+              </strong>
+
+              ${
+                o.customer_phone
+                  ? ` • ${esc(o.customer_phone)}`
+                  : ""
+              }
+
+              <br>
+
+              ${
+                o.fulfillment === "delivery"
+                  ? "🛵 จัดส่ง: " + esc(o.address || "-")
+                  : "🏪 รับที่ร้าน"
+              }
+
+              ${
+                o.note
+                  ? `<br>📝 ${esc(o.note)}`
+                  : ""
+              }
+
+            </div>
+
+          </div>
+
+          <span class="badge">
+            ${statusNames[o.status] || o.status}
+          </span>
+
+        </div>
+
+        <div class="order-items">
+
+          ${
+            (Array.isArray(o.items) ? o.items : [])
+              .map(i => `
+                <div class="order-item-line">
+
+                  <span>
+                    ${esc(i.name)} × ${i.qty}
+                  </span>
+
+                  <b>
+                    ${money(
+                      Number(i.price || 0) * Number(i.qty || 0)
+                    )}
+                  </b>
+
+                </div>
+              `)
+              .join("")
+          }
+
+        </div>
+
+        <div class="order-bottom">
+
+          <span class="order-total">
+            ${money(o.total)}
+          </span>
+
+          <select
+            class="status-select"
+            onchange="updateStatus('${o.id}',this.value)"
+          >
+            ${
+              Object.entries(statusNames)
+                .map(([v,n]) => `
+                  <option
+                    value="${v}"
+                    ${o.status === v ? "selected" : ""}
+                  >
+                    ${n}
+                  </option>
+                `)
+                .join("")
+            }
+          </select>
+
+          <button
+            class="delete-order-btn"
+            onclick="deleteOrder('${o.id}')"
+          >
+            🗑️ ลบ
+          </button>
+
+        </div>
+
+      </article>
+    `;
+  }).join("");
 }
 $("orderFilter").onchange=renderOrders;
 $("orderDate").onchange=renderOrders;
