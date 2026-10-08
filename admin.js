@@ -145,7 +145,9 @@ function subscribeOrders(){
 async function loadProducts(){
   const {data,error}=await sb.from("products").select("*").order("created_at",{ascending:true});
   if(error){$("adminProducts").innerHTML=`<div class="error">โหลดเมนูไม่ได้: ${esc(error.message)}</div>`;return}
-  products=data||[];renderProducts();
+products=data||[];
+renderProducts();
+renderWalkInProducts();
 }
 function renderProducts(){
   $("adminProducts").innerHTML=products.map(p=>`<article class="admin-product">
@@ -356,3 +358,4 @@ function updateWalkInTotal(){
 
   $("walkInTotal").textContent = money(total);
 }
+renderWalkInProducts();
