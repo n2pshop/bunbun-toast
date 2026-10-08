@@ -76,6 +76,10 @@ function renderOrders(){
 
   let rows=filter==="all"?orders:orders.filter(o=>o.status===filter);
 
+if(orderSourceFilter !== "all"){
+  rows = rows.filter(o => o.order_source === orderSourceFilter);
+}
+
   if(selectedDate){
     rows=rows.filter(o=>{
       if(!o.created_at) return false;
@@ -109,6 +113,20 @@ function renderOrders(){
 }
 $("orderFilter").onchange=renderOrders;
 $("orderDate").onchange=renderOrders;
+$("sourceAll").onclick = () => {
+  orderSourceFilter = "all";
+  renderOrders();
+};
+
+$("sourceOnline").onclick = () => {
+  orderSourceFilter = "online";
+  renderOrders();
+};
+
+$("sourceWalkin").onclick = () => {
+  orderSourceFilter = "walkin";
+  renderOrders();
+};
 async function updateStatus(id,status){
 const {error}=await sb.from("bunbun_orders").update({status}).eq("id",id);
   if(error){toast("เปลี่ยนสถานะไม่สำเร็จ");return}
