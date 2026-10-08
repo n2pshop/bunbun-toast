@@ -358,72 +358,82 @@ function updateWalkInTotal(){
 
   $("walkInTotal").textContent = money(total);
 }
-$("saveWalkInOrder").onclick = async () => {
+const saveWalkInBtn = $("saveWalkInOrder");
 
-  const items = products
-    .filter(p => (walkInCart[String(p.id)] || 0) > 0)
-    .map(p => ({
-      product_id: p.id,
-      name: p.name,
-      price: Number(p.price || 0),
-      qty: walkInCart[String(p.id)]
-    }));
+if(saveWalkInBtn){
 
-  if(!items.length){
-    $("walkInOrderMsg").textContent = "กรุณาเลือกเมนูก่อนครับ";
-    return;
-  }
+  saveWalkInBtn.addEventListener("click", async () => {
 
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.qty,
-    0
-  );
+    console.log("กดปุ่มบันทึกออเดอร์หน้าร้าน");
 
-  const customerName =
-    $("walkInCustomerName").value.trim() || "หน้าร้าน";
+    const items = products
+      .filter(p => (walkInCart[String(p.id)] || 0) > 0)
+      .map(p => ({
+        product_id: p.id,
+        name: p.name,
+        price: Number(p.price || 0),
+        qty: walkInCart[String(p.id)]
+      }));
 
-  const btn = $("saveWalkInOrder");
+    if(!items.length){
+      $("walkInOrderMsg").textContent = "กรุณาเลือกเมนูก่อนครับ";
+      return;
+    }
 
-  btn.disabled = true;
-  btn.textContent = "กำลังบันทึก...";
+    const total = items.reduce(
+      (sum,item) => sum + item.price * item.qty,
+      0
+    );
 
-  const { data, error } = await sb
-    .from("bunbun_orders")
-    .insert({
-      customer_name: customerName,
-      customer_phone: "หน้าร้าน",
-      fulfillment: "pickup",
-      address: "",
-      note: "ออเดอร์หน้าร้าน",
-      items: items,
-      total: total,
-      status: "new"
-    })
-    .select("order_no")
-    .single();
+    const customerName =
+      $("walkInCustomerName").value.trim() || "หน้าร้าน";
 
-  btn.disabled = false;
-  btn.textContent = "🏪 บันทึกออเดอร์หน้าร้าน";
+    saveWalkInBtn.disabled = true;
+    saveWalkInBtn.textContent = "กำลังบันทึก...";
 
-  if(error){
-    console.error(error);
+    const {data,error} = await sb
+      .from("bunbun_orders")
+      .insert({
+        customer_name: customerName,
+        customer_phone: "หน้าร้าน",
+        fulfillment: "pickup",
+        address: "",
+        note: "ออเดอร์หน้าร้าน",
+        items: items,
+        total: total,
+        status: "new"
+      })
+      .select("order_no")
+      .single();
+
+    saveWalkInBtn.disabled = false;
+    saveWalkInBtn.textContent = "🏪 บันทึกออเดอร์หน้าร้าน";
+
+    if(error){
+      console.error(error);
+
+      $("walkInOrderMsg").textContent =
+        "❌ บันทึกไม่สำเร็จ: " + error.message;
+
+      return;
+    }
+
     $("walkInOrderMsg").textContent =
-      "❌ บันทึกไม่สำเร็จ: " + error.message;
-    return;
-  }
+      "✅ บันทึกสำเร็จ เลขออเดอร์ " + data.order_no;
 
-  $("walkInOrderMsg").textContent =
-    "✅ บันทึกสำเร็จ เลขออเดอร์ " + data.order_no;
+    walkInCart = {};
 
-  walkInCart = {};
-  renderWalkInProducts();
-  updateWalkInTotal();
+    renderWalkInProducts();
+    updateWalkInTotal();
 
-  await loadOrders();
+    await loadOrders();
 
-  setTimeout(() => {
-    $("walkInOrderModal").classList.remove("show");
-    $("walkInOrderMsg").textContent = "";
-  }, 1000);
-};
+    setTimeout(() => {
+      $("walkInOrderModal").classList.remove("show");
+      $("walkInOrderMsg").textContent = "";
+    },1000);
+
+  });
+
+}
 renderWalkInProducts();
