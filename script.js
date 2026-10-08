@@ -1,4 +1,70 @@
 const money = n => "฿" + Number(n || 0).toLocaleString("th-TH");
+// =============================
+// ตรวจสอบเวลาเปิด-ปิดร้าน
+// =============================
+let shopOpenTime = "09:00";
+let shopCloseTime = "20:00";
+let shopIsOpen = false;
+
+async function loadShopStatus(){
+  const {data,error} = await sb
+    .from("bunbun_settings")
+    .select("open_time, close_time, is_open")
+    .eq("id",1)
+    .single();
+
+  if(error){
+    console.error("โหลดเวลาร้านไม่ได้:", error);
+    return;
+  }
+
+  shopOpenTime = data.open_time.slice(0,5);
+  shopCloseTime = data.close_time.slice(0,5);
+  shopIsOpen = data.is_open;
+
+  updateShopStatus();
+}
+
+function checkShopOpen(){
+  if(!shopIsOpen) return false;
+
+  const now = new Date();
+  const current =
+    now.getHours() * 60 + now.getMinutes();
+
+  const [oh,om] = shopOpenTime.split(":").map(Number);
+  const [ch,cm] = shopCloseTime.split(":").map(Number);
+
+  const open = oh * 60 + om;
+  const close = ch * 60 + cm;
+
+  return current >= open && current < close;
+}
+
+function updateShopStatus(){
+  const open = checkShopOpen();
+  const checkout = $("checkout");
+  const shopState = $("shopState");
+
+  if(shopState){
+    if(open){
+      shopState.textContent = "🟢 เปิดรับออเดอร์";
+    }else{
+      shopState.textContent =
+        `🔴 ร้านปิด • เปิด ${shopOpenTime} น.`;
+    }
+  }
+
+  if(checkout){
+    checkout.disabled = !open;
+
+    if(open){
+      checkout.textContent = "สั่งซื้อ";
+    }else{
+      checkout.textContent = "🔴 ร้านปิดรับออเดอร์";
+    }
+  }
+}
 let products = [];
 let cart = JSON.parse(localStorage.getItem("bunbun_cart") || "[]");
 
@@ -51,10 +117,30 @@ function openOrder(){
 }
 function closeOrder(){$("orderModal").classList.remove("show")}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-$("openCart").onclick=openCart;$("closeCart").onclick=closeCart;$("overlay").onclick=closeCart;$("checkout").onclick=()=>{closeCart();openOrder()};$("closeOrder").onclick=closeOrder;
+$("openCart").onclick=openCart;
+$("closeCart").onclick=closeCart;
+$("overlay").onclick=closeCart;
+
+$("checkout").onclick=()=>{
+  if(!checkShopOpen()){
+    toast(`🔴 ร้านปิดรับออเดอร์ เปิด ${shopOpenTime} น.`);
+    return;
+  }
+
+  closeCart();
+  openOrder();
+};
+
+$("closeOrder").onclick=closeOrder;
 $("fulfillment").onchange=e=>$("addressField").classList.toggle("hidden",e.target.value!=="delivery");
 
 $("confirmOrder").onclick=async()=>{
+  if(!checkShopOpen()){
+    toast(`🔴 ร้านปิดรับออเดอร์ เปิด ${shopOpenTime} น.`);
+    closeOrder();
+    return;
+  }
+
   const rows=getCartRows(), name=$("customerName").value.trim(), phone=$("customerPhone").value.trim(), fulfillment=$("fulfillment").value, address=$("customerAddress").value.trim(), note=$("customerNote").value.trim();
   if(!name||!phone){toast("กรุณากรอกชื่อและเบอร์โทร");return}
   if(fulfillment==="delivery"&&!address){toast("กรุณากรอกที่อยู่จัดส่ง");return}
@@ -78,7 +164,9 @@ $("confirmOrder").onclick=async()=>{
   </p>
 `;
 };
-renderCart();loadProducts();
+renderCart();
+loadProducts();
+loadShopStatus();
 // =============================
 // เช็คสถานะออเดอร์
 // =============================
