@@ -226,3 +226,63 @@ async function saveShopHours(){
 }
 
 $("saveShopHours").onclick = saveShopHours;
+// =============================
+// สรุปยอดขายตามวันที่
+// =============================
+
+async function loadSalesSummary(date = ""){
+
+  const targetDate = date || new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Bangkok"
+  }).format(new Date());
+
+  const rows = orders.filter(o => {
+
+    if(!o.created_at) return false;
+
+    const orderDate = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Bangkok"
+    }).format(new Date(o.created_at));
+
+    return orderDate === targetDate;
+  });
+
+  const validRows = rows.filter(o => o.status !== "cancelled");
+
+  const totalSales = validRows.reduce(
+    (sum,o) => sum + Number(o.total || 0),
+    0
+  );
+
+  $("salesOrderCount").textContent = validRows.length;
+  $("salesAmount").textContent = money(totalSales);
+}
+
+
+// เลือกวันที่
+$("salesDate").onchange = () => {
+  loadSalesSummary($("salesDate").value);
+};
+
+
+// ปุ่ม วันนี้
+$("salesTodayBtn").onclick = () => {
+
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Bangkok"
+  }).format(new Date());
+
+  $("salesDate").value = today;
+
+  loadSalesSummary(today);
+};
+
+
+// แสดงยอดขายวันนี้ตอนเปิดหน้า Admin
+const todaySalesDate = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Asia/Bangkok"
+}).format(new Date());
+
+$("salesDate").value = todaySalesDate;
+
+loadSalesSummary(todaySalesDate);
