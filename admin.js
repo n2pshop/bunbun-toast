@@ -166,3 +166,57 @@ $("saveProductBtn").onclick=async()=>{
 window.toggleProduct=async(id,value)=>{const {error}=await sb.from("products").update({available:value}).eq("id",id);if(error){toast("ทำรายการไม่สำเร็จ");return}await loadProducts();toast(value?"เปิดขายแล้ว":"ปิดขายแล้ว")};
 window.deleteProduct=async id=>{if(!confirm("ลบเมนูนี้ใช่ไหม?"))return;const {error}=await sb.from("products").delete().eq("id",id);if(error){toast("ลบไม่สำเร็จ");return}await loadProducts();toast("ลบเมนูแล้ว")};
 init();
+// =============================
+// ตั้งเวลาเปิด-ปิดร้าน
+// =============================
+
+async function loadShopHours(){
+  const { data, error } = await sb
+    .from("bunbun_settings")
+    .select("open_time, close_time, is_open")
+    .eq("id", 1)
+    .single();
+
+  if(error){
+    console.error("โหลดเวลาร้านไม่ได้:", error);
+    return;
+  }
+
+  $("shopOpenTime").value = data.open_time.slice(0,5);
+  $("shopCloseTime").value = data.close_time.slice(0,5);
+}
+
+async function saveShopHours(){
+  const openTime = $("shopOpenTime").value;
+  const closeTime = $("shopCloseTime").value;
+  const result = $("shopHoursResult");
+
+  if(!openTime || !closeTime){
+    result.innerHTML = "กรุณาเลือกเวลาเปิดและเวลาปิด";
+    return;
+  }
+
+  if(openTime >= closeTime){
+    result.innerHTML = "⚠️ เวลาเปิดต้องน้อยกว่าเวลาปิด";
+    return;
+  }
+
+  const { error } = await sb
+    .from("bunbun_settings")
+    .update({
+      open_time: openTime,
+      close_time: closeTime,
+      updated_at: new Date().toISOString()
+    })
+    .eq("id", 1);
+
+  if(error){
+    console.error(error);
+    result.innerHTML = "❌ บันทึกเวลาไม่สำเร็จ";
+    return;
+  }
+
+  result.innerHTML = "✅ บันทึกเวลาเรียบร้อยแล้ว";
+}
+
+$("saveShopHours").onclick = saveShopHours;
