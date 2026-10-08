@@ -137,7 +137,7 @@ function subscribeOrders(){
 }
 
 async function loadProducts(){
-  const {data,error}=await sb.from("products").select("*").order("created_at",{ascending:true});.order("created_at",{ascending:true});
+  const {data,error}=await sb.from("products").select("*").order("created_at",{ascending:true});
   if(error){$("adminProducts").innerHTML=`<div class="error">โหลดเมนูไม่ได้: ${esc(error.message)}</div>`;return}
   products=data||[];renderProducts();
 }
