@@ -34,10 +34,45 @@
         <div class="stat"><span>รอดำเนินการ</span><strong id="pendingOrders">0</strong></div>
       </div>
 
-      <section class="admin-section">
-        <div class="admin-section-head"><div><span class="eyebrow">ORDERS</span><h2>ออเดอร์ล่าสุด</h2></div><select id="orderFilter"><option value="all">ทั้งหมด</option><option value="new">ออเดอร์ใหม่</option><option value="preparing">กำลังทำ</option><option value="ready">พร้อมรับ</option><option value="delivering">กำลังส่ง</option><option value="done">เสร็จแล้ว</option><option value="cancelled">ยกเลิก</option></select></div>
-        <div id="ordersList" class="orders-list"></div>
-      </section>
+<section class="admin-section">
+  <div class="admin-section-head">
+
+    <div>
+      <span class="eyebrow">ORDERS</span>
+      <h2>ออเดอร์</h2>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+
+      <input
+        type="date"
+        id="orderDate"
+        style="padding:10px 12px;border:1px solid #ead8d2;border-radius:10px;background:#fff;color:#5b4038"
+      >
+
+      <select id="orderFilter">
+        <option value="all">ทุกสถานะ</option>
+        <option value="new">ออเดอร์ใหม่</option>
+        <option value="preparing">กำลังทำ</option>
+        <option value="ready">พร้อมรับ</option>
+        <option value="delivering">กำลังส่ง</option>
+        <option value="done">เสร็จแล้ว</option>
+        <option value="cancelled">ยกเลิก</option>
+      </select>
+
+      <button
+        type="button"
+        onclick="clearOrderDate()"
+        style="padding:10px 12px;border:0;border-radius:10px;background:#f3e5df;color:#6b4035;cursor:pointer"
+      >
+        ดูทั้งหมด
+      </button>
+
+    </div>
+  </div>
+
+  <div id="ordersList" class="orders-list"></div>
+</section>
 
       <section class="admin-section">
         <div class="admin-section-head"><div><span class="eyebrow">PRODUCTS</span><h2>จัดการเมนู</h2></div><button id="addProductBtn" class="primary">+ เพิ่มเมนู</button></div>
