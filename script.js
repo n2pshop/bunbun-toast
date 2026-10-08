@@ -154,20 +154,76 @@ $("confirmOrder").onclick=async()=>{
   const {data,error}=await sb.from("bunbun_orders").insert({customer_name:name,customer_phone:phone,fulfillment,address:fulfillment==="delivery"?address:"",note,total,items:orderItems,order_source: "online",status:"new"}).select("order_no").single();
   btn.disabled=false;btn.textContent="🐰 ยืนยันออเดอร์";
   if(error){$("orderResult").textContent="ส่งออเดอร์ไม่สำเร็จ กรุณาตรวจสอบ Supabase";console.error(error);return}
-  cart=[];saveCart();$("orderResult").innerHTML=`
-  <div class="success-bunny">🐰</div>
-  <h3>ขอบคุณสำหรับออเดอร์นะคะ! 💕</h3>
-  <p>รับออเดอร์เรียบร้อยแล้ว</p>
-  <div class="order-number">
-    🎫 เลขออเดอร์<br>
-    <strong>${esc(data.order_no)}</strong>
+cart=[];
+saveCart();
+
+$("orderResult").innerHTML = `
+  <div class="success-popup-content">
+
+    <div class="success-bunny">🐰</div>
+
+    <h3>สั่งซื้อสำเร็จแล้ว! 🎉</h3>
+
+    <p class="success-text">
+      ขอบคุณที่อุดหนุน BunBun Toast 💕
+    </p>
+
+    <div class="order-number-box">
+      <div class="order-label">🎫 เลขออเดอร์ของคุณ</div>
+
+      <strong id="successOrderNumber">
+        ${esc(data.order_no)}
+      </strong>
+
+      <button
+        type="button"
+        class="copy-order-btn"
+        onclick="copyOrderNumber('${esc(data.order_no)}', this)"
+      >
+        📋 คัดลอกเลขออเดอร์
+      </button>
+    </div>
+
+    <div class="save-order">
+      📌 กรุณาบันทึกเลขออเดอร์นี้ไว้<br>
+      ใช้สำหรับเช็กสถานะและรับสินค้า
+    </div>
+
+    <button
+      type="button"
+      class="success-close-btn"
+      onclick="closeOrder()"
+    >
+      🐰 ตกลง
+    </button>
+
   </div>
-  <p class="save-order">
-    ⚠️ กรุณาเก็บเลขออเดอร์นี้ไว้<br>
-    ใช้สำหรับสอบถามหรือรับสินค้าในภายหลังนะคะ
-  </p>
 `;
 };
+async function copyOrderNumber(orderNo, btn){
+
+  try{
+    await navigator.clipboard.writeText(orderNo);
+
+    const oldText = btn.textContent;
+
+    btn.textContent = "✅ คัดลอกเลขออเดอร์แล้ว!";
+
+    btn.classList.add("copied");
+
+    setTimeout(()=>{
+      btn.textContent = oldText;
+      btn.classList.remove("copied");
+    },2000);
+
+  }catch(error){
+
+    console.error("คัดลอกไม่ได้:",error);
+
+    toast("กรุณากดค้างเพื่อคัดลอกเลขออเดอร์");
+  }
+
+}
 renderCart();
 loadProducts();
 loadShopStatus();
