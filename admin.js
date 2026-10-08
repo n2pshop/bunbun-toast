@@ -298,3 +298,61 @@ $("addWalkInOrderBtn").onclick = () => {
 $("closeWalkInOrder").onclick = () => {
   $("walkInOrderModal").classList.remove("show");
 };
+function renderWalkInProducts(){
+
+  const box = $("walkInProductList");
+
+  if(!box) return;
+
+  box.innerHTML = products.map(p => `
+    <div class="walkin-product-row">
+
+      <div>
+        <strong>${esc(p.name)}</strong>
+        <div>${money(p.price)}</div>
+      </div>
+
+      <div class="walkin-qty">
+        <button type="button" onclick="changeWalkInQty('${p.id}',-1)">−</button>
+        <span id="walkQty-${p.id}">0</span>
+        <button type="button" onclick="changeWalkInQty('${p.id}',1)">+</button>
+      </div>
+
+    </div>
+  `).join("");
+}
+
+let walkInCart = {};
+
+function changeWalkInQty(id, change){
+
+  const key = String(id);
+
+  walkInCart[key] = Math.max(
+    0,
+    (walkInCart[key] || 0) + change
+  );
+
+  const qty = $("walkQty-" + id);
+
+  if(qty){
+    qty.textContent = walkInCart[key];
+  }
+
+  updateWalkInTotal();
+}
+
+function updateWalkInTotal(){
+
+  let total = 0;
+
+  products.forEach(p => {
+
+    const qty = walkInCart[String(p.id)] || 0;
+
+    total += Number(p.price || 0) * qty;
+
+  });
+
+  $("walkInTotal").textContent = money(total);
+}
