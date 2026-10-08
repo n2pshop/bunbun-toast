@@ -30,7 +30,13 @@ $("loginBtn").onclick=async()=>{
 $("logoutBtn").onclick=()=>sb.auth.signOut();
 $("refreshBtn").onclick=loadAll;
 
-async function loadAll(){await Promise.all([loadOrders(),loadProducts()]);}
+async function loadAll(){
+  await Promise.all([
+    loadOrders(),
+    loadProducts(),
+    loadShopHours()
+  ]);
+}
 async function loadOrders(){
   const {data,error}=await sb.from("bunbun_orders").select("*").order("created_at",{ascending:false}).limit(100);
   if(error){$("ordersList").innerHTML=`<div class="error">โหลดออเดอร์ไม่ได้: ${esc(error.message)}</div>`;return}
