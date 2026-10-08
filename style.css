@@ -1305,3 +1305,164 @@ footer{
   }
 
 }
+/* =============================
+   SALES SUMMARY
+============================= */
+
+.sales-summary{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto 28px;
+  padding:28px;
+  box-sizing:border-box;
+
+  background:linear-gradient(135deg,#fffaf6,#fff3ec);
+  border:1px solid #f1ddd3;
+  border-radius:24px;
+  box-shadow:0 8px 25px rgba(123,56,36,.08);
+}
+
+.sales-summary-head{
+  margin-bottom:22px;
+}
+
+.sales-summary-head h2{
+  margin:6px 0 5px;
+  font-size:28px;
+  color:#5f2d1d;
+}
+
+.sales-summary-head p{
+  margin:0;
+  color:#9b7568;
+  font-size:14px;
+}
+
+/* กล่องเลือกวันที่ */
+
+.sales-date-box{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:16px 18px;
+  background:#ffffff;
+  border:1px solid #f0dfd7;
+  border-radius:16px;
+  margin-bottom:18px;
+  box-shadow:0 4px 12px rgba(123,56,36,.05);
+}
+
+.sales-date-box label{
+  font-weight:700;
+  color:#6b3a2a;
+}
+
+.sales-date-box input{
+  height:44px;
+  padding:0 12px;
+  border:1px solid #dfc9bf;
+  border-radius:10px;
+  background:#fffaf7;
+  color:#5f2d1d;
+  font-size:15px;
+  outline:none;
+}
+
+.sales-date-box input:focus{
+  border-color:#c98268;
+  box-shadow:0 0 0 3px rgba(201,130,104,.12);
+}
+
+.sales-date-box button{
+  height:44px;
+  padding:0 18px;
+  border:0;
+  border-radius:10px;
+  background:#7b3824;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.sales-date-box button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 5px 12px rgba(123,56,36,.2);
+}
+
+/* กล่องผลลัพธ์ */
+
+.sales-result{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.sales-item{
+  position:relative;
+  overflow:hidden;
+
+  padding:22px;
+  background:#fff;
+  border:1px solid #f0dfd7;
+  border-radius:18px;
+
+  box-shadow:0 5px 15px rgba(123,56,36,.06);
+}
+
+.sales-item::after{
+  content:"";
+  position:absolute;
+  width:80px;
+  height:80px;
+  right:-25px;
+  top:-25px;
+  background:#fff0e8;
+  border-radius:50%;
+}
+
+.sales-item span{
+  display:block;
+  margin-bottom:8px;
+  color:#927066;
+  font-size:14px;
+  font-weight:600;
+}
+
+.sales-item strong{
+  display:block;
+  color:#6b2f1d;
+  font-size:30px;
+  font-weight:800;
+}
+
+/* มือถือ */
+
+@media(max-width:700px){
+
+  .sales-summary{
+    padding:20px;
+    border-radius:20px;
+  }
+
+  .sales-summary-head h2{
+    font-size:23px;
+  }
+
+  .sales-date-box{
+    flex-wrap:wrap;
+  }
+
+  .sales-date-box label{
+    width:100%;
+  }
+
+  .sales-date-box input{
+    flex:1;
+    min-width:0;
+  }
+
+  .sales-result{
+    grid-template-columns:1fr;
+  }
+}
