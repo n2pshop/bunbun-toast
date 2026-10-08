@@ -1,6 +1,7 @@
 const money = n => "฿" + Number(n || 0).toLocaleString("th-TH");
 const $=id=>document.getElementById(id);
 let orders=[], products=[];
+let orderSourceFilter = "all";
 const statusNames={new:"ออเดอร์ใหม่",preparing:"กำลังทำ",ready:"พร้อมรับ",delivering:"กำลังส่ง",done:"เสร็จแล้ว",cancelled:"ยกเลิก"};
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
