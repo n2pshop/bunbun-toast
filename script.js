@@ -234,9 +234,39 @@ $("checkOrderBtn").onclick = async () => {
         คุณ ${esc(data.customer_name)}
       </div>
 
-      <div class="status-current">
-        ${statusNames[data.status] || data.status}
-      </div>
+    <div class="status-steps">
+
+  <div class="status-step ${data.status === "new" ? "active" : ""}">
+    <div class="step-icon">🆕</div>
+    <span>รับออเดอร์</span>
+  </div>
+
+  <div class="status-line"></div>
+
+  <div class="status-step ${data.status === "preparing" ? "active" : ""}">
+    <div class="step-icon">👩‍🍳</div>
+    <span>กำลังทำ</span>
+  </div>
+
+  <div class="status-line"></div>
+
+  <div class="status-step ${["ready","delivering"].includes(data.status) ? "active" : ""}">
+    <div class="step-icon">
+      ${data.status === "delivering" ? "🛵" : "📦"}
+    </div>
+    <span>
+      ${data.status === "delivering" ? "กำลังส่ง" : "พร้อมรับ"}
+    </span>
+  </div>
+
+  <div class="status-line"></div>
+
+  <div class="status-step ${data.status === "done" ? "active" : ""}">
+    <div class="step-icon">✅</div>
+    <span>เสร็จแล้ว</span>
+  </div>
+
+</div>
     </div>
   `;
 };
