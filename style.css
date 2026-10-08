@@ -1539,3 +1539,30 @@ footer{
 #sourceAll{
   border: 1px solid #ead8d2;
 }
+/* =========================
+   ปุ่มลบออเดอร์
+========================= */
+
+.delete-order-btn{
+  border: 1px solid #f0cfcf;
+  background: #fff7f7;
+  color: #c85c65;
+  padding: 9px 14px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.delete-order-btn:hover{
+  background: #c85c65;
+  color: #fff;
+  border-color: #c85c65;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(200,92,101,.22);
+}
+
+.delete-order-btn:active{
+  transform: translateY(0);
+}
