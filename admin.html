@@ -173,7 +173,56 @@
       </section>
     </main>
   </div>
+<!-- หน้าต่างออเดอร์หน้าร้าน -->
+<div id="walkInOrderModal" class="modal-wrap">
 
+  <div class="modal walkin-modal">
+
+    <button
+      class="icon-btn modal-close"
+      id="closeWalkInOrder">
+      ×
+    </button>
+
+    <div class="modal-title">
+      <span>🏪</span>
+      <div>
+        <h2>ออเดอร์หน้าร้าน</h2>
+        <p>บันทึกออเดอร์ที่ลูกค้าสั่งที่ร้าน</p>
+      </div>
+    </div>
+
+    <div class="walkin-customer">
+      <label>ชื่อลูกค้า</label>
+      <input
+        id="walkInCustomerName"
+        value="หน้าร้าน"
+        placeholder="เช่น ลูกค้าหน้าร้าน">
+    </div>
+
+    <div class="walkin-products">
+      <h3>🍞 เลือกเมนู</h3>
+
+      <div id="walkInProductList"></div>
+    </div>
+
+    <div class="walkin-total">
+      <span>ยอดรวม</span>
+      <strong id="walkInTotal">฿0</strong>
+    </div>
+
+    <button
+      type="button"
+      id="saveWalkInOrder"
+      class="primary full">
+      🏪 บันทึกออเดอร์หน้าร้าน
+    </button>
+
+    <div id="walkInOrderMsg" class="error"></div>
+
+  </div>
+
+</div>
   <div id="productModal" class="modal-wrap">
     <div class="modal">
       <button class="icon-btn modal-close" id="closeProduct">×</button>
