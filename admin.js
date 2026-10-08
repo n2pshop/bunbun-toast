@@ -64,7 +64,22 @@ function renderStats(){
   ).length;
 }
 function renderOrders(){
-  const filter=$("orderFilter").value;const rows=filter==="all"?orders:orders.filter(o=>o.status===filter);
+  const filter=$("orderFilter").value;
+  const selectedDate=$("orderDate").value;
+
+  let rows=filter==="all"?orders:orders.filter(o=>o.status===filter);
+
+  if(selectedDate){
+    rows=rows.filter(o=>{
+      if(!o.created_at) return false;
+
+      const orderDate=new Intl.DateTimeFormat("en-CA",{
+        timeZone:"Asia/Bangkok"
+      }).format(new Date(o.created_at));
+
+      return orderDate===selectedDate;
+    });
+  }
   if(!rows.length){$("ordersList").innerHTML=`<div class="order-card" style="text-align:center;color:#947568;padding:35px">ยังไม่มีออเดอร์</div>`;return}
   $("ordersList").innerHTML=rows.map(o=>`
   <article class="order-card">
@@ -86,6 +101,7 @@ function renderOrders(){
   </article>`).join("");
 }
 $("orderFilter").onchange=renderOrders;
+$("orderDate").onchange=renderOrders;
 async function updateStatus(id,status){
 const {error}=await sb.from("bunbun_orders").update({status}).eq("id",id);
   if(error){toast("เปลี่ยนสถานะไม่สำเร็จ");return}
