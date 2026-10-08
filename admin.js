@@ -398,10 +398,11 @@ if(saveWalkInBtn){
         customer_phone: "หน้าร้าน",
         fulfillment: "pickup",
         address: "",
-        note: "ออเดอร์หน้าร้าน",
-        items: items,
-        total: total,
-        status: "new"
+note: "ออเดอร์หน้าร้าน",
+items: items,
+total: total,
+order_source: "walkin",
+status: "new"
       })
       .select("order_no")
       .single();
