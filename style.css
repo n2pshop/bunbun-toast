@@ -1566,3 +1566,33 @@ footer{
 .delete-order-btn:active{
   transform: translateY(0);
 }
+.order-source{
+  display:inline-flex;
+  align-items:center;
+  margin-left:8px;
+  padding:5px 9px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.order-source.online{
+  background:#f0e8ff;
+  color:#7a3db8;
+}
+
+.order-source.walkin{
+  background:#fff0e6;
+  color:#b85c00;
+}
+
+.order-info{
+  margin-top:7px;
+  line-height:1.7;
+  color:#6b4b43;
+}
+
+.order-info strong{
+  color:#4d3029;
+  font-weight:700;
+}
