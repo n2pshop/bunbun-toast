@@ -271,8 +271,22 @@ function subscribeOrders(){
   sb.channel("bunbun-orders")
     .on(
       "postgres_changes",
-      {event:"*",schema:"public",table:"bunbun_orders"},
-      ()=>loadOrders()
+      {
+        event:"INSERT",
+        schema:"public",
+        table:"bunbun_orders"
+      },
+      payload => {
+
+        console.log("🔔 มีออเดอร์ใหม่", payload.new);
+
+        loadOrders();
+
+        toast(
+          "🔔 มีออเดอร์ใหม่ #" +
+          (payload.new.order_no || "")
+        );
+      }
     )
     .subscribe();
 }
