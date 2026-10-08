@@ -1226,3 +1226,82 @@ footer{
     flex-wrap:wrap;
   }
 }
+/* =============================
+   ORDER STATUS STEPS
+============================= */
+
+.status-steps{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  margin-top:25px;
+  gap:8px;
+}
+
+.status-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  min-width:85px;
+  color:#b9a19a;
+  font-size:13px;
+  font-weight:700;
+}
+
+.step-icon{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f4e9e4;
+  font-size:22px;
+  opacity:.6;
+  transition:.25s;
+}
+
+.status-step.active{
+  color:#7b3824;
+}
+
+.status-step.active .step-icon{
+  background:#ffe2d5;
+  opacity:1;
+  transform:scale(1.08);
+  box-shadow:0 0 0 5px #fff3ed;
+}
+
+.status-line{
+  flex:1;
+  max-width:65px;
+  height:3px;
+  background:#eadbd5;
+  border-radius:10px;
+}
+
+/* มือถือ */
+@media(max-width:600px){
+
+  .status-steps{
+    gap:3px;
+  }
+
+  .status-step{
+    min-width:60px;
+    font-size:11px;
+  }
+
+  .step-icon{
+    width:40px;
+    height:40px;
+    font-size:18px;
+  }
+
+  .status-line{
+    max-width:30px;
+  }
+
+}
