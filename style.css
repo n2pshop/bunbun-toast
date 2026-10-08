@@ -126,3 +126,51 @@
   color:#6d473c;
   font-weight:600;
 }
+/* =========================
+   ADMIN LAYOUT FIX
+========================= */
+
+.admin-main{
+  width:min(1180px, calc(100% - 40px));
+  margin:0 auto;
+}
+
+/* การ์ดออเดอร์ */
+.orders-list{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.order-card{
+  width:100%;
+  box-sizing:border-box;
+}
+
+/* ส่วนหัวออเดอร์ */
+.admin-section{
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* เวลาเปิด-ปิดร้าน */
+.shop-hours-card{
+  max-width:1100px;
+  margin-left:auto;
+  margin-right:auto;
+  box-sizing:border-box;
+}
+
+/* บนจอเล็ก */
+@media (max-width:700px){
+  .admin-main{
+    width:calc(100% - 24px);
+  }
+
+  .orders-list,
+  .admin-section,
+  .shop-hours-card{
+    max-width:100%;
+  }
+}
