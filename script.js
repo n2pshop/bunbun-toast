@@ -79,3 +79,76 @@ $("confirmOrder").onclick=async()=>{
 `;
 };
 renderCart();loadProducts();
+// =============================
+// เช็คสถานะออเดอร์
+// =============================
+$("checkOrderBtn").onclick = async () => {
+  const orderNo = $("checkOrderNo").value.trim().toUpperCase();
+  const result = $("orderStatusResult");
+
+  if (!orderNo) {
+    result.innerHTML = `
+      <div class="status-error">
+        กรุณากรอกเลขออเดอร์ก่อนนะครับ 🐰
+      </div>
+    `;
+    return;
+  }
+
+  result.innerHTML = `
+    <div class="status-loading">
+      🔎 กำลังตรวจสอบออเดอร์...
+    </div>
+  `;
+
+  const { data, error } = await sb
+    .from("bunbun_orders")
+    .select("order_no, customer_name, status, total, created_at")
+    .eq("order_no", orderNo)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+
+    result.innerHTML = `
+      <div class="status-error">
+        ❌ ไม่สามารถตรวจสอบออเดอร์ได้
+      </div>
+    `;
+    return;
+  }
+
+  if (!data) {
+    result.innerHTML = `
+      <div class="status-error">
+        ❌ ไม่พบเลขออเดอร์นี้
+      </div>
+    `;
+    return;
+  }
+
+  const statusNames = {
+    new: "🆕 รับออเดอร์แล้ว",
+    preparing: "👩‍🍳 กำลังทำ",
+    ready: "📦 พร้อมรับสินค้า",
+    delivering: "🛵 กำลังจัดส่ง",
+    done: "✅ เสร็จแล้ว",
+    cancelled: "❌ ยกเลิก"
+  };
+
+  result.innerHTML = `
+    <div class="status-result">
+      <div class="status-order-no">
+        🎫 ${esc(data.order_no)}
+      </div>
+
+      <div class="status-customer">
+        คุณ ${esc(data.customer_name)}
+      </div>
+
+      <div class="status-current">
+        ${statusNames[data.status] || data.status}
+      </div>
+    </div>
+  `;
+};
